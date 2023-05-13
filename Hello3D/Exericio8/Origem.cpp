@@ -3,7 +3,7 @@
  * Adaptado por Rossana Baptista Queiroz
  * para a disciplina de Processamento Gráfico - Jogos Digitais - Unisinos
  * Versão inicial: 7/4/2017
- * Última atualização em 09/08/2021
+ * Última atualização em 12/05/2023
  *
  */
 
@@ -79,7 +79,7 @@ int main()
 //#endif
 
 	// Criação da janela GLFW
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Ola Triangulo!", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Ola 3D -- Rossana!", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 
 	// Fazendo o registro da função de callback para a janela GLFW
