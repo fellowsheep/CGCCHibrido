@@ -90,7 +90,7 @@ int main()
 	Shader shader("../shaders/sprite.vs", "../shaders/sprite.fs");
 
 	//Carregando uma textura e armazenando o identificador na memória
-	GLuint texID = loadTexture("../textures/mario.png");
+	GLuint texID = loadTexture("../textures/CG_Museum.png");
 
 	// Gerando uma geometria de quadrilátero com coordenadas de textura
 	GLuint VAO = setupSprite();
@@ -132,7 +132,7 @@ int main()
 		glm::mat4 model = glm::mat4(1); //matriz identidade
 		model = glm::translate(model, glm::vec3(400.0, 300.0, 0));
 		model = glm::rotate(model, (float)glfwGetTime() /*glm::radians(90.0f)*/, glm::vec3(0, 0, 1));
-		model = glm::scale(model, glm::vec3(500.0, 500.0, 1.0));
+		model = glm::scale(model, glm::vec3(1920.0 * 0.5, 1080.0 * 0.5, 1.0));
 		GLint modelLoc = glGetUniformLocation(shader.ID, "model");
 		glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
 

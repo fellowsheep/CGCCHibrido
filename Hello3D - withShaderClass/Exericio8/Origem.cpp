@@ -118,6 +118,8 @@ int main()
 		float angle = (GLfloat)glfwGetTime();
 
 		model = glm::mat4(1); 
+
+
 		if (rotateX)
 		{
 			model = glm::rotate(model, angle, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -134,17 +136,31 @@ int main()
 
 		}
 
+		model = glm::translate(model, glm::vec3(-0.5, 0.0, 0.0));
+		model = glm::scale(model, glm::vec3(0.5, 0.5, 0.5));
+
 		glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
 		// Chamada de desenho - drawcall
 		// Poligono Preenchido - GL_TRIANGLES
-		
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 18);
-
 		// Chamada de desenho - drawcall
 		// CONTORNO - GL_LINE_LOOP
-		
 		glDrawArrays(GL_POINTS, 0, 18);
+
+		/////
+		model = glm::mat4(1); //matriz identidade
+		model = glm::translate(model, glm::vec3(0.5, 0.0, 0.0));
+		model = glm::scale(model, glm::vec3(0.5, 0.5, 0.5));
+		glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
+
+		// Chamada de desenho - drawcall
+		// Poligono Preenchido - GL_TRIANGLES
+		glDrawArrays(GL_TRIANGLES, 0, 18);
+		// Chamada de desenho - drawcall
+		// CONTORNO - GL_LINE_LOOP
+		glDrawArrays(GL_POINTS, 0, 18);
+
 		glBindVertexArray(0);
 
 		// Troca os buffers da tela
