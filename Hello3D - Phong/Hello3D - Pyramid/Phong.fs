@@ -22,18 +22,21 @@ uniform vec3 cameraPos;
 
 void main()
 {
+	//Cálculo da parcela de iluminação ambiente
 	vec3 ambient = ka * lightColor;
 
+	//Cálculo da parcela de iluminação difusa
 	vec3 N = normalize(scaledNormal);
 	vec3 L = normalize(lightPos - fragPos);
 	float diff = max(dot(N,L),0.0);
-	vec3 diffuse = diff * lightColor;
+	vec3 diffuse = kd * diff * lightColor;
 
+	//Cálculo da parcela de iluminação especular
 	vec3 V = normalize(cameraPos - fragPos);
 	vec3 R = normalize(reflect(-L,N));
 	float spec = max(dot(R,V),0.0);
 	spec = pow(spec,q);
-	vec3 specular = spec * lightColor;
+	vec3 specular = ks * spec * lightColor;
 
 	vec3 result = (ambient + diffuse) * finalColor + specular;
 

@@ -138,7 +138,7 @@ int main()
 
 
 	//Definindo as propriedades do material da superficie
-	shader.setFloat("ka", 0.4);
+	shader.setFloat("ka", 0.2);
 	shader.setFloat("kd", 0.5);
 	shader.setFloat("ks", 0.5);
 	shader.setFloat("q", 10.0);
