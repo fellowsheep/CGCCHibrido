@@ -120,13 +120,13 @@ int main()
 	CatmullRom catmull;
 	catmull.setControlPoints(controlPoints);
 	catmull.setShader(&shader);
-	catmull.generateCurve(100);
+	catmull.generateCurve(10);
 	
-	std::vector<glm::vec3> uniPoints = generateUnisinosPointsSet();
-	GLuint VAOUni = generateControlPointsBuffer(uniPoints);
+	//std::vector<glm::vec3> uniPoints = generateUnisinosPointsSet();
+	//GLuint VAOUni = generateControlPointsBuffer(uniPoints);
 
 	Bezier bezier;
-	bezier.setControlPoints(uniPoints);
+	bezier.setControlPoints(controlPoints);
 	bezier.setShader(&shader);
 	bezier.generateCurve(10);
 
@@ -151,15 +151,15 @@ int main()
 		glLineWidth(10);
 		glPointSize(20);
 
-		
-		glBindVertexArray(VAOUni);
+		//Desenha o conjunto de pontos de controle
+		glBindVertexArray(VAO);
 		shader.setVec4("finalColor", 0, 0, 1, 1);
-		glDrawArrays(GL_LINE_STRIP, 0, uniPoints.size());
+		glDrawArrays(GL_LINE_STRIP, 0, controlPoints.size());
 		glBindVertexArray(0);
 
 		//hermite.drawCurve(glm::vec4(1, 0, 0, 1));
 		bezier.drawCurve(glm::vec4(0, 1, 0, 1));
-		//catmull.drawCurve(glm::vec4(1, 0, 1, 1));
+		catmull.drawCurve(glm::vec4(1, 0, 1, 1));
 
 		glm::vec3 pointOnCurve = bezier.getPointOnCurve(i);
 		vector <glm::vec3> aux;

@@ -436,6 +436,7 @@ int loadSimpleOBJ(string filepath, int& nVerts, glm::vec3 color)
 					vbuffer.push_back(vertices[index].x);
 					vbuffer.push_back(vertices[index].y);
 					vbuffer.push_back(vertices[index].z);
+
 					vbuffer.push_back(color.r);
 					vbuffer.push_back(color.g);
 					vbuffer.push_back(color.b);
@@ -447,6 +448,7 @@ int loadSimpleOBJ(string filepath, int& nVerts, glm::vec3 color)
 					index = atoi(token.c_str()) - 1;
 					vbuffer.push_back(texCoords[index].s);
 					vbuffer.push_back(texCoords[index].t);
+
 					//Recuperando os indices de vns
 					tokens[i] = tokens[i].substr(pos + 1);
 					index = atoi(tokens[i].c_str()) - 1;
