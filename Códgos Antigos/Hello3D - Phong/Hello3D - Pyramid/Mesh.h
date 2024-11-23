@@ -17,6 +17,9 @@ public:
 	void update();
 	void draw();
 
+	void setAngle(float angle) { this->angle = angle; }
+	void setAxis(glm::vec3 axis) { this->axis = axis;  }
+
 protected:
 	GLuint VAO; //Identificador do Vertex Array Object - Vértices e seus atributos
 	int nVertices;

@@ -117,7 +117,7 @@ int main()
 	glUseProgram(shader.ID);
 
 	//Matriz de view -- posição e orientação da câmera
-	glm::mat4 view = glm::lookAt(glm::vec3(0.0, 0.0, 3.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+	glm::mat4 view = glm::lookAt(cameraPos, glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 	shader.setMat4("view",value_ptr(view));
 
 	//Matriz de projeção perspectiva - definindo o volume de visualização (frustum)
@@ -128,6 +128,7 @@ int main()
 
 	int nVerts;
 	GLuint VAO = loadSimpleOBJ("../../3D_models/Suzanne/suzanneTriLowPoly.obj", nVerts, glm::vec3(0.0,1.0,1.0));
+	//GLuint VAO2 = loadSimpleOBJ("../../3D_models/Cube/cube.obj", nVerts);
 	GLuint VAO2 = loadSimpleOBJ("../../3D_models/Suzanne/suzanneTriLowPoly.obj", nVerts);
 	GLuint VAO3 = loadSimpleOBJ("../../3D_models/Suzanne/suzanneTriLowPoly.obj", nVerts, glm::vec3(1.0, 1.0, 0.0));
 
@@ -141,11 +142,11 @@ int main()
 	shader.setFloat("ka", 0.2);
 	shader.setFloat("kd", 0.5);
 	shader.setFloat("ks", 0.5);
-	shader.setFloat("q", 10.0);
+	shader.setFloat("q", 32.0);
 
 	//Definindo a fonte de luz pontual
-	shader.setVec3("lightPos", -2.0, 10.0, 2.0);
-	shader.setVec3("lightColor", 1.0, 1.0, 0.0);
+	shader.setVec3("lightPos", 2.0, 10.0, 5.0);
+	shader.setVec3("lightColor", 1.0, 1.0, 1.0);
 
 
 	// Loop da aplicação - "game loop"
@@ -169,17 +170,21 @@ int main()
 		shader.setVec3("cameraPos", cameraPos.x, cameraPos.y, cameraPos.z);
 
 		// Chamada de desenho - drawcall
-		shader.setFloat("q", 10.0);
-		suzanne1.update();
-		suzanne1.draw();
+		//shader.setFloat("q", 10.0);
+		//suzanne1.update();
+		//suzanne1.draw();
 
-		shader.setFloat("q", 1.0);
+		suzanne2.setAngle((float)glfwGetTime()*20);
+		suzanne2.setAxis(glm::vec3(1.0, 0.0, 0.0));
+		
+
+		//shader.setFloat("q", 10.0);
 		suzanne2.update();
 		suzanne2.draw();
 
-		shader.setFloat("q", 250.0);
-		suzanne3.update();
-		suzanne3.draw();
+		//shader.setFloat("q", 250.0);
+		//suzanne3.update();
+		//suzanne3.draw();
 
 		// Troca os buffers da tela
 		glfwSwapBuffers(window);

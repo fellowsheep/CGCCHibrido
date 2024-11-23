@@ -1,0 +1,34 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "(gdb) Launch Program", // Nome da configuração
+        "type": "cppdbg",               // Tipo de depuração C++
+        "request": "launch",            // Iniciar a depuração
+        "program": "${fileDirname}\\${fileBasenameNoExtension}.exe", // Executável
+        "args": [], // Argumentos passados para o programa (adicione se necessário)
+        "stopAtEntry": false, 
+        "cwd": "${workspaceFolder}",    // Diretório de trabalho (pasta do workspace)
+        "environment": [],
+        "externalConsole": false,       // Use o console integrado do VS Code
+        "MIMode": "gdb",                // Usando GDB para depuração
+        "miDebuggerPath": "C:\\msys64\\ucrt64\\bin\\gdb.exe", // Caminho para o depurador GDB
+        "setupCommands": [
+          {
+            "description": "Habilitar modo de impressão adequada para GDB",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "C/C++: g++.exe build active file", // Task de build que será chamada antes de iniciar a depuração
+        "internalConsoleOptions": "openOnSessionStart",      // Abre o console interno
+        "logging": {
+          "engineLogging": true,        // Para diagnosticar problemas
+          "trace": true
+        },
+        "visualizerFile": "${workspaceFolder}/.vscode/gdb.visualizers"
+        
+      }
+    ]
+  }
+  
