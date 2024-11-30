@@ -58,6 +58,17 @@ const GLchar* fragmentShaderSource = "#version 450\n"
 "}\n\0";
 
 bool rotateX=false, rotateY=false, rotateZ=false;
+float translateX = 0.0f, translateY = 0.0f, translateZ = 0.0f;
+float scale = 0.4f;
+// Array usado para renderizar os cubos com suas posições
+float cubes[] = {
+	// Cubo 1
+	0.0f, 0.0f, 0.0f,
+	// Cubo 2
+	1.1f, 1.1f, 1.1f,
+	//Cubo 3
+	-1.1f, -1.1f, -1.1f
+};
 
 // Função MAIN
 int main()
@@ -79,7 +90,7 @@ int main()
 //#endif
 
 	// Criação da janela GLFW
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Ola 3D -- Rossana!", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Modulo 2 -- Vitor Hugo!", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 
 	// Fazendo o registro da função de callback para a janela GLFW
@@ -115,6 +126,12 @@ int main()
 
 	glm::mat4 model = glm::mat4(1); //matriz identidade;
 	GLint modelLoc = glGetUniformLocation(shaderID, "model");
+
+	// Models do glm para aumentar/diminuir e mover os vértices
+	glm::vec3 scaleModel = glm::vec3(10.0f, 10.0f, 10.0f);
+
+	glm::vec3 translationModel = glm::vec3(1.0f, 1.0f, 1.0f);
+
 	//
 	model = glm::rotate(model, /*(GLfloat)glfwGetTime()*/glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
@@ -137,34 +154,45 @@ int main()
 
 		float angle = (GLfloat)glfwGetTime();
 
-		model = glm::mat4(1); 
-		if (rotateX)
-		{
-			model = glm::rotate(model, angle, glm::vec3(1.0f, 0.0f, 0.0f));
-			
+		for (int i = 0; i < sizeof(cubes) / sizeof(float); i += 3) {
+			model = glm::mat4(1);
+
+			scaleModel = glm::vec3(scale, scale, scale);
+			model = glm::scale(model, scaleModel);
+
+			if (rotateX)
+			{
+				model = glm::rotate(model, angle, glm::vec3(1.0f, 0.0f, 0.0f));
+
+			}
+			else if (rotateY)
+			{
+				model = glm::rotate(model, angle, glm::vec3(0.0f, 1.0f, 0.0f));
+
+			}
+			else if (rotateZ)
+			{
+				model = glm::rotate(model, angle, glm::vec3(0.0f, 0.0f, 1.0f));
+
+			}
+
+			// O cálculo da posição leva em conta o valor digitado pelo teclado (translateX, Y e Z) + os valores de cada cubo do array
+			// de cubos
+			translationModel = glm::vec3(translateX + cubes[i + 0], translateY + cubes[i + 1], translateZ + cubes[i + 2]);
+			model = glm::translate(model, translationModel);
+
+			glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
+			// Chamada de desenho - drawcall
+			// Poligono Preenchido - GL_TRIANGLES
+
+			glBindVertexArray(VAO);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+
+			// Chamada de desenho - drawcall
+			// CONTORNO - GL_LINE_LOOP
+
+			glDrawArrays(GL_POINTS, 0, 36);
 		}
-		else if (rotateY)
-		{
-			model = glm::rotate(model, angle, glm::vec3(0.0f, 1.0f, 0.0f));
-
-		}
-		else if (rotateZ)
-		{
-			model = glm::rotate(model, angle, glm::vec3(0.0f, 0.0f, 1.0f));
-
-		}
-
-		glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
-		// Chamada de desenho - drawcall
-		// Poligono Preenchido - GL_TRIANGLES
-		
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 18);
-
-		// Chamada de desenho - drawcall
-		// CONTORNO - GL_LINE_LOOP
-		
-		glDrawArrays(GL_POINTS, 0, 18);
 		glBindVertexArray(0);
 
 		// Troca os buffers da tela
@@ -191,14 +219,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		rotateY = false;
 		rotateZ = false;
 	}
-
 	if (key == GLFW_KEY_Y && action == GLFW_PRESS)
 	{
 		rotateX = false;
 		rotateY = true;
 		rotateZ = false;
 	}
-
 	if (key == GLFW_KEY_Z && action == GLFW_PRESS)
 	{
 		rotateX = false;
@@ -206,7 +232,44 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		rotateZ = true;
 	}
 
+	// Por mais que as teclas para aumentar e diminuir sejam [ e ] no código,
+	// na prática, se usa [ para aumentar e ´ para diminuir. Creio que isso ocorre em função
+	// das diferenças no teclado americano e o ABNT
+	if (key == GLFW_KEY_LEFT_BRACKET && action == GLFW_PRESS) {
+		if (scale > 0.1f) scale -= 0.1f;
+	}
 
+	if (key == GLFW_KEY_RIGHT_BRACKET && action == GLFW_PRESS) {
+		if (scale < 2.0f) scale += 0.1f;
+	}
+
+	if (key == GLFW_KEY_A && action == GLFW_PRESS) {
+		translateX -= 0.1f;
+	}
+	if (key == GLFW_KEY_D && action == GLFW_PRESS) {
+		translateX += 0.1f;
+	}
+
+	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
+		translateZ -= 0.1f;
+	}
+	if (key == GLFW_KEY_W && action == GLFW_PRESS) {
+		translateZ += 0.1f;
+	}
+
+	if (key == GLFW_KEY_J && action == GLFW_PRESS) {
+		translateY -= 0.1f;
+	}
+	if (key == GLFW_KEY_I && action == GLFW_PRESS) {
+		translateY += 0.1f;
+	}
+
+	// Reset da posição do cubo
+	if (key == GLFW_KEY_R && action == GLFW_PRESS) {
+		translateX = 0.0f;
+		translateY = 0.0f;
+		translateZ = 0.0f;
+	}
 
 }
 
@@ -271,34 +334,60 @@ int setupGeometry()
 	// Pode ser arazenado em um VBO único ou em VBOs separados
 	GLfloat vertices[] = {
 
-		//Base da pirâmide: 2 triângulos
 		//x    y    z    r    g    b
-		-0.5, -0.5, -0.5, 1.0, 1.0, 0.0,
-		-0.5, -0.5,  0.5, 0.0, 1.0, 1.0,
-		 0.5, -0.5, -0.5, 1.0, 0.0, 1.0,
+		// Base - vermelho
+		  -0.5, -0.5, -0.5, 1.0, 0.0, 0.0,
+		  -0.5, -0.5,  0.5, 1.0, 0.0, 0.0,
+		   0.5, -0.5, -0.5, 1.0, 0.0, 0.0,
 
-		 -0.5, -0.5, 0.5, 1.0, 1.0, 0.0,
-		  0.5, -0.5,  0.5, 0.0, 1.0, 1.0,
-		  0.5, -0.5, -0.5, 1.0, 0.0, 1.0,
+		  -0.5, -0.5,  0.5, 1.0, 0.0, 0.0,
+		   0.5, -0.5,  0.5, 1.0, 0.0, 0.0,
+		   0.5, -0.5, -0.5, 1.0, 0.0, 0.0,
 
-		 //
-		 -0.5, -0.5, -0.5, 1.0, 1.0, 0.0,
-		  0.0,  0.5,  0.0, 1.0, 1.0, 0.0,
-		  0.5, -0.5, -0.5, 1.0, 1.0, 0.0,
+		 // Topo - verde
+		   0.5, 0.5,  0.5, 0.0, 1.0, 0.0,
+		   0.5, 0.5, -0.5, 0.0, 1.0, 0.0,
+		  -0.5, 0.5,  0.5, 0.0, 1.0, 0.0,
 
-		  -0.5, -0.5, -0.5, 1.0, 0.0, 1.0,
-		  0.0,  0.5,  0.0, 1.0, 0.0, 1.0,
-		  -0.5, -0.5, 0.5, 1.0, 0.0, 1.0,
+		   0.5, 0.5, -0.5, 0.0, 1.0, 0.0,
+		  -0.5, 0.5, -0.5, 0.0, 1.0, 0.0,
+		  -0.5, 0.5,  0.5, 0.0, 1.0, 0.0,
 
-		   -0.5, -0.5, 0.5, 1.0, 1.0, 0.0,
-		  0.0,  0.5,  0.0, 1.0, 1.0, 0.0,
-		  0.5, -0.5, 0.5, 1.0, 1.0, 0.0,
+		  // Lado 1
+		  0.5, -0.5,  0.5, 0.0, 0.0, 1.0,
+		  0.5,  0.5,  0.5, 0.0, 0.0, 1.0,
+		  0.5, -0.5, -0.5, 0.0, 0.0, 1.0,
 
+		  0.5,  0.5, -0.5, 0.0, 0.0, 1.0,
+		  0.5, -0.5, -0.5, 0.0, 0.0, 1.0,
+		  0.5,  0.5,  0.5, 0.0, 0.0, 1.0,
+
+		  // Lado 2
+		  -0.5, -0.5,  0.5, 1.0, 1.0, 0.0,
+		  -0.5,  0.5,  0.5, 1.0, 1.0, 0.0,
+		  -0.5, -0.5, -0.5, 1.0, 1.0, 0.0,
+
+		  -0.5,  0.5, -0.5, 1.0, 1.0, 0.0,
+		  -0.5, -0.5, -0.5, 1.0, 1.0, 0.0,
+		  -0.5,  0.5,  0.5, 1.0, 1.0, 0.0,
+
+		  // Lado 3
+		   0.5,  0.5,  0.5, 0.0, 1.0, 1.0,
+		   0.5, -0.5,  0.5, 0.0, 1.0, 1.0,
+		  -0.5,  0.5,  0.5, 0.0, 1.0, 1.0,
+
+		  -0.5, -0.5, 0.5, 0.0, 1.0, 1.0,
+		  -0.5,  0.5, 0.5, 0.0, 1.0, 1.0,
 		   0.5, -0.5, 0.5, 0.0, 1.0, 1.0,
-		  0.0,  0.5,  0.0, 0.0, 1.0, 1.0,
-		  0.5, -0.5, -0.5, 0.0, 1.0, 1.0,
 
+		   // Lado 4
+		  -0.5, -0.5, -0.5, 1.0, 0.0, 1.0,
+		  -0.5,  0.5, -0.5, 1.0, 0.0, 1.0,
+		   0.5, -0.5, -0.5, 1.0, 0.0, 1.0,
 
+		   0.5,  0.5, -0.5, 1.0, 0.0, 1.0,
+		   0.5, -0.5, -0.5, 1.0, 0.0, 1.0,
+		  -0.5,  0.5, -0.5, 1.0, 0.0, 1.0,
 	};
 
 	GLuint VBO, VAO;
