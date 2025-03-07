@@ -21,8 +21,7 @@ FetchContent_MakeAvailable(glfw)
 # Adiciona as pastas de cabeçalhos
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/include/glad)
-include_directories(${CMAKE_SOURCE_DIR}/Common)
-include_directories(${CMAKE_SOURCE_DIR}/Dependencies)  # GLM adicionada!
+include_directories(${CMAKE_SOURCE_DIR}/common)
 
 # Lista de exercícios (por enquanto só tem o HelloTriangle)
 set(EXERCISES
