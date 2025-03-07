@@ -37,8 +37,7 @@ Baixe o **MSYS2** através do link:
 
 Provavelmente ao terminar de instalar, abrirá um terminal. Caso isso não aconteça, digite "msys" na barra de pesquisa do Windows e entre neste aplicativo:
 
-![image](https://github.com/user-attachments/assets/8d5603b3-6338-4235-9775-6aeaa900da7d)
-
+ <img src="https://github.com/user-attachments/assets/8d5603b3-6338-4235-9775-6aeaa900da7d" alt="" width="256" align="middle"/>
 
 Execute o seguinte comando para instalar os pacotes necessários:
 
@@ -52,7 +51,8 @@ Caso queira ou necessite de mais suporte nesta etapa, consulte o manual oficial:
 
 ### Configurando a variável de ambiente no Sistema Operacional (Windows)
 
-Esse passo é necessário para que, de qualquer diretório, o sistema operacional encontre o executável do compilador. A forma mais simples de fazer isso (se você tiver permissão de administrador do sistema) é a seguinte:
+Esse passo garante que o sistema operacional encontre o compilador automaticamente ao rodar comandos no terminal, sem precisar especificar o caminho completo. A forma mais simples de fazer isso (se você tiver permissão de administrador do sistema) é a seguinte:
+
  - Edite a variável de caminhos do sistema operacional (`PATH`), acrescentando o caminho onde ficaram os executáveis do compilador (provavelmente ficaram em `C:\msys64\ucrt64\bin` - ou onde você escolheu instalar)
 
 <img src="https://github.com/user-attachments/assets/645846a5-38e2-4a26-a307-a961afb80116" alt="" style="width:30%; height:auto;" align="middle"/>
@@ -91,38 +91,38 @@ git clone https://github.com/fellowsheep/CGCCHIB.git
 Se você nunca usou o git, pode fazê-lo utilizando o 🔗 [Github Desktop](https://desktop.github.com/download/). Para isso, consulte o seguinte material:
 - [Tutorial de Entregas pelo Github](TutorialEntregasGithub.pdf)
 
-2️⃣ **Abra o VS Code** e vá em **Arquivo -> "Abrir Diretório"** (File -> "Open Folder"). Selecione o diretório onde você clonou o repositório de exemplo.
+2️⃣ Abra o VS Code e vá em `Arquivo -> Abrir Diretório` (ou `File -> Open Folder`). Selecione o diretório onde você clonou o repositório de exemplo.
 
 <img src="https://github.com/user-attachments/assets/501ad8f1-30cc-44b0-bec0-8ef650a79998" alt="" style="width:30%; height:auto;" align="middle"/>
 
-**OBS.**: É muito importante entrar no diretório do projeto pelo comando Open Folder. Caso contrário, o VS Code não reconhece o diretório `${workspaceFolder}`, o que poderá causar problemas no passo de compilação.
+⚠️ É muito importante entrar no diretório do projeto pelo comando `Open Folder`. Caso contrário, o VS Code não reconhece o diretório `${workspaceFolder}`, o que poderá causar problemas no passo de compilação.
 
 ---
 
 ## 📌 3. Configurando o CMake no VS Code
 
-1️⃣ **No VS Code, pressione** `Ctrl + Shift + P` e procure por **"CMake: Scan for kits"**
+1️⃣ No VS Code, pressione `Ctrl + Shift + P` e procure por `CMake: Scan for kit`
 
 <img src="https://github.com/user-attachments/assets/93417f3a-6fc3-448c-bb73-1cc3a33ab199" alt="" style="width:40%; height:auto;" align="middle"/>
 
-2️⃣ Logo após, pressione novamente `Ctrl + Shift + P` e procure por **"CMake: Select a Kit"**.  
+2️⃣ Logo após, pressione novamente `Ctrl + Shift + P` e procure por `**CMake: Select a Kit**`.  
 
 3️⃣ **Selecione o compilador correto**:
-   - Escolha **"GCC for MSYS2 UCRT64"** (ou similar, conforme sua instalação)
+   - Escolha `GCC for MSYS2 UCRT64` (ou similar, conforme sua instalação)
      
      <img src="https://github.com/user-attachments/assets/618655d3-253a-4d99-a6c0-e241c45a5c0c" alt="" style="width:40%; height:auto;" align="middle"/>
 
-4️⃣ Este passo costuma acontecer automaticamente. Mas caso não ocorra nada após selecionar o kit, **Pressione `Ctrl + Shift + P` e execute "CMake: Configure"**
+4️⃣ Este passo costuma acontecer automaticamente. Mas caso não ocorra nada após selecionar o kit, pressione `Ctrl + Shift + P` e execute `CMake: Configure`
    - Isso fará o **CMake detectar o compilador correto e preparar o projeto**. Espera-se que, após esta etapa, tenha-se uma saída similar a esta no terminal do VS Studio Code:
   
    <img src="https://github.com/user-attachments/assets/ca3bc7f1-5115-48d2-9f39-6a236e18f9b3" alt="" style="width:50%; height:auto;" align="middle"/>
 
 ## 📌 4. Compilando e Executando o Projeto
 
-Da mesma forma que o CMake: Congigure pode executar automaticamente, a compilação pode ocorrer em sequência também de forma automática.
+Da mesma forma que o **CMake: Configure** pode executar automaticamente, a compilação pode ocorrer em sequência também de forma automática.
 Caso não ocorra ou você pretenda compilar novamente:
 
-1️⃣ **Pressione `Ctrl + Shift + P` e execute "CMake: Build"**
+1️⃣ Pressione `Ctrl + Shift + P` e execute `CMake: Build`
    - Ou rode manualmente no terminal:
 
    ```sh
