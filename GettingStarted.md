@@ -67,55 +67,56 @@ Para isso, você pode ir no menu View -> Extensions ou clicar no ícone <img src
 
 Agora vamos baixar o código de exemplo:
 
-1️⃣ **Abra o terminal do VS Code (`Ctrl + J`)**
-2️⃣ **Clone o repositório** no diretório de sua escolha:
+1️⃣ **Clone o repositório** no diretório de sua escolha:
 
 ```sh
-git clone https://github.com/fellowsheep/PGCCHIB.git
+git clone https://github.com/fellowsheep/CGCCHIB.git
 ```
+Se você nunca usou o git, pode fazê-lo utilizando o 🔗 [Github Desktop](https://desktop.github.com/download/). Para isso, consulte o seguinte material:
+- [Tutorial de Entregas pelo Github](TutorialEntregasGithub.pdf)
 
-3️⃣ **Entre na pasta do projeto**:
+3️⃣ **Abra o VS Code** e vá em **Arquivo -> "Abrir Diretório"** (File -> "Open Folder"). Selecione o diretório onde você clonou o repositório de exemplo.
 
-```sh
-cd PGCCHIB
-```
+<img src="https://github.com/user-attachments/assets/501ad8f1-30cc-44b0-bec0-8ef650a79998" alt="" style="width:30%; height:auto;" align="middle"/>
+
+**OBS.**: É muito importante entrar no diretório do projeto pelo comando Open Folder. Caso contrário, o VS Code não reconhece o diretório `${workspaceFolder}`, o que poderá causar problemas no passo de compilação.
 
 ---
 
 ## 📌 3. Configurando o CMake no VS Code
 
-1️⃣ **No VS Code, pressione** `Ctrl + Shift + P` e procure por **"CMake: Select a Kit"**.  
-2️⃣ **Selecione o compilador correto**:
-   - Escolha **"GCC for MSYS2 UCRT64"**.
-3️⃣ Se o kit não aparecer, execute `CMake: Scan for Kits` e tente novamente.
+1️⃣ **No VS Code, pressione** `Ctrl + Shift + P` e procure por **"CMake: Scan for kits"**
 
-Agora, configure o projeto:
+<img src="https://github.com/user-attachments/assets/93417f3a-6fc3-448c-bb73-1cc3a33ab199" alt="" style="width:40%; height:auto;" align="middle"/>
 
-4️⃣ **Pressione `Ctrl + Shift + P` e execute "CMake: Configure"**
-   - Isso fará o **CMake detectar o compilador correto e preparar o projeto**.
+2️⃣ Logo após, pressione novamente `Ctrl + Shift + P` e procure por **"CMake: Select a Kit"**.  
 
-Se houver erro de compilador, rode este comando no terminal:
+3️⃣ **Selecione o compilador correto**:
+   - Escolha **"GCC for MSYS2 UCRT64"** (ou similar, conforme sua instalação)
+     
+     <img src="https://github.com/user-attachments/assets/618655d3-253a-4d99-a6c0-e241c45a5c0c" alt="" style="width:40%; height:auto;" align="middle"/>
 
-```sh
-cmake -G "MinGW Makefiles" -DCMAKE_C_COMPILER=C:/msys64/ucrt64/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/msys64/ucrt64/bin/g++.exe
-```
-
----
+4️⃣ Este passo costuma acontecer automaticamente. Mas caso não ocorra nada após selecionar o kit, **Pressione `Ctrl + Shift + P` e execute "CMake: Configure"**
+   - Isso fará o **CMake detectar o compilador correto e preparar o projeto**. Espera-se que, após esta etapa, tenha-se uma saída similar a esta no terminal do VS Studio Code:
+  
+   <img src="https://github.com/user-attachments/assets/ca3bc7f1-5115-48d2-9f39-6a236e18f9b3" alt="" style="width:50%; height:auto;" align="middle"/>
 
 ## 📌 4. Compilando e Executando o Projeto
 
-Agora que o CMake está configurado, compile o projeto:
+Da mesma forma que o CMake: Congigure pode executar automaticamente, a compilação pode ocorrer em sequência também de forma automática.
+Caso não ocorra ou você pretenda compilar novamente:
 
 1️⃣ **Pressione `Ctrl + Shift + P` e execute "CMake: Build"**
    - Ou rode manualmente no terminal:
 
    ```sh
+   cd build
    cmake --build .
    ```
 
 2️⃣ **Execute o programa**:
    ```sh
-   ./HelloTriangle.exe
+   ./Hello3D.exe
    ```
 
 Se tudo estiver correto, o projeto será compilado e executado com sucesso! 🚀
@@ -125,8 +126,33 @@ Se tudo estiver correto, o projeto será compilado e executado com sucesso! 🚀
 ## 📌 5. Próximos Passos
 
 Agora que seu ambiente está configurado, você pode:
-✅ Criar novos exercícios dentro da pasta `src/`.
-✅ Adicionar novas funcionalidades ao código.
-✅ Explorar OpenGL e computação gráfica com mais liberdade! 😃
+✅ Copiar o conteúdo do repositório clonado para o **seu repositório**. Caso precise de ajuda para criar e organizar seu próprio repositório de exercícios, consulte os seguintes materiais:
+- [Tutorial de Entregas pelo Github](TutorialEntregasGithub.pdf)
+- [Organizando seu repositório no Github](OrganizandoRepositorioGithub.pdf)
 
+✅ Adicionar os exercícios dentro da pasta `src/`
+```
+📁 src/
+│── Hello3D.cpp
+│── Transformacoes.cpp
+│── Iluminacao.cpp
+```
 
+✅ Para cada exercício novo, atualizar o arquivo `CMakelists.txt`
+```cmake
+set(EXERCISES 
+    Hello3D
+    Transformacoes
+    Iluminacao
+)
+```
+✅ Atualmente, o `CMakelists.txt` já está configurado para compilar e gerar o excutável de cada código acrescentado no set EXERCISES. Se necessário, adicionar novas dependências
+```cmake
+foreach(EXERCISE ${EXERCISES})
+    add_executable(${EXERCISE} src/${EXERCISE}.cpp Common/glad.c)
+    target_link_libraries(${EXERCISE} glfw opengl32)
+endforeach()
+```
+✅ Isso faz com que cada exercício gere seu próprio executável dentro da pasta build/.
+
+✅ Portanto, se adicionar mais arquivos .cpp, basta incluir o nome na lista EXERCISES e rodar o CMake novamente.
