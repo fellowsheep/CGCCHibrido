@@ -33,9 +33,9 @@ pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain
 Esse passo é necessário para que, de qualquer diretório, o sistema operacional encontre o executável do compilador. A forma mais simples de fazer isso (se você tiver permissão de administrador do sistema) é a seguinte:
  - Edite a variável de caminhos do sistema operacional (`PATH`), acrescentando o caminho onde ficaram os executáveis do compilador (provavelmente ficaram em `C:\msys64\ucrt64\bin` - ou onde você escolheu instalar)
 
-![image](https://github.com/user-attachments/assets/645846a5-38e2-4a26-a307-a961afb80116)
-![image](https://github.com/user-attachments/assets/89bc66d1-c269-45ac-9f5f-e528325a9e95)
-![image](https://github.com/user-attachments/assets/25c305fa-239c-4119-afd3-20d8dbf318e6)
+<img src="https://github.com/user-attachments/assets/645846a5-38e2-4a26-a307-a961afb80116" alt="" style="width:30%; height:auto;" align="middle"/>
+<img src="https://github.com/user-attachments/assets/89bc66d1-c269-45ac-9f5f-e528325a9e95" alt="" style="width:30%; height:auto;" align="middle"/>
+<img src="https://github.com/user-attachments/assets/25c305fa-239c-4119-afd3-20d8dbf318e6" alt="" style="width:30%; height:auto;" align="middle"/>
 
  - Se estiver em um computador que não tenha acesso de adm, adicionar temporariamente ao path com este comando (via terminal CMD): 
 ```sh
@@ -43,7 +43,7 @@ Esse passo é necessário para que, de qualquer diretório, o sistema operaciona
 ```
 ---
 
-### 🔹 **3 Instalar o VS Code**
+### 🔹 **3 - Instalar o VS Code**
 Baixe e instale o **VS Code** pelo link:
 🔗 [VS Code Download](https://code.visualstudio.com/)
 
@@ -52,7 +52,7 @@ Após a instalação, abra o **VS Code** e instale as seguintes extensões:
 - **CMake Tools** ➝ Para integração com o CMake.
 - **C/C++** ➝ Para suporte à IntelliSense e depuração.
   
-Para isso, você pode ir no menu View -> Extensions ou clicar no ícone __ da interface do Visual Studio Code.
+Para isso, você pode ir no menu View -> Extensions ou clicar no ícone <img src="https://github.com/user-attachments/assets/ce6873db-1dbb-4a74-887f-4ea90f90dfc4" alt="" width="32" align="middle" /> da interface do Visual Studio Code.
 
 ---
 
