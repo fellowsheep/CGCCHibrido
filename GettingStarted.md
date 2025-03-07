@@ -1,6 +1,18 @@
 # Configuração do Ambiente para Computação Gráfica com <img src="https://github.com/user-attachments/assets/db96047c-5e1a-4656-a3af-ee3432f9f35a" alt="OpenGL Logo" height="32" style="vertical-align: middle;" />
 
-Este tutorial irá guiá-lo pela instalação e configuração do ambiente para rodar projetos OpenGL com **CMake** e **VS Code**, utilizando o **MinGW-UCRT64** como compilador (portanto, no Windows).
+Este tutorial irá guiá-lo pela instalação e configuração do ambiente para rodar projetos OpenGL com **CMake** e **VS Code**, utilizando o **MinGW-UCRT64** como compilador (portanto, no **Windows** <img src="https://github.com/user-attachments/assets/ad835449-5f61-4907-a116-b9ced2c8e30d" alt="MS Windows Logo" height="16" style="vertical-align: middle;" />).
+
+## ⚠️ Importante: Diferenças entre Windows, Linux e macOS
+
+Este tutorial foi desenvolvido para Windows utilizando MSYS2 UCRT64 como ambiente de compilação. Caso esteja utilizando Linux ou macOS, algumas configurações podem ser diferentes, especialmente na escolha do compilador C/C++ e na configuração do CMake.
+
+Para configurar corretamente o compilador no VS Code no Linux ou no MacOS, siga os guias oficiais:
+
+🔗 [Linux: Configuração do VS Code para C++ no Linux](https://code.visualstudio.com/docs/cpp/config-linux)  
+🔗 [macOS: Configuração do VS Code para C++ no macOS](https://code.visualstudio.com/docs/cpp/config-clang-mac)  
+
+Caso tenha dificuldades na configuração do CMake, consulte a documentação oficial:  
+🔗 [CMake Documentation](https://cmake.org/documentation/)
 
 ---
 
@@ -33,6 +45,10 @@ Execute o seguinte comando para instalar os pacotes necessários:
 ```sh
 pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain
 ```
+
+Caso queira ou necessite de mais suporte nesta etapa, consulte o manual oficial:
+
+🔗 [Configuração do VS Code para C++ no Windows](https://code.visualstudio.com/docs/cpp/config-mingw)
 
 ### Configurando a variável de ambiente no Sistema Operacional (Windows)
 
