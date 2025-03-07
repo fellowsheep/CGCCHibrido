@@ -8,7 +8,7 @@ Este tutorial irá guiá-lo pela instalação e configuração do ambiente para 
 
 Antes de começar, certifique-se de ter os seguintes programas instalados:
 
-### 🔹 1.1 Instalar o <img src="https://github.com/user-attachments/assets/5e9c8078-53b0-4497-bbf2-1f379293aa60" alt="CMake Logo" height="32" style="vertical-align: middle;" />
+### 1️⃣ Instalar o <img src="https://github.com/user-attachments/assets/5e9c8078-53b0-4497-bbf2-1f379293aa60" alt="CMake Logo" height="32" style="vertical-align: middle;" />
 
 Baixe e instale o **CMake** a partir do site oficial:
 🔗 [CMake Download](https://cmake.org/download/)
@@ -17,7 +17,7 @@ Durante a instalação, **habilite a opção "Add CMake to system PATH"** para f
 
 ---
 
-### 🔹 1.2 Instalar o Compilador Compilador MinGW-UCRT64 através do <img src="https://github.com/user-attachments/assets/a473c44b-1fe1-4399-911a-d921225f53a6" alt="MSYS2 Logo" width="32" style="vertical-align: middle;" />
+### 2️⃣ Instalar o Compilador Compilador MinGW-UCRT64 através do <img src="https://github.com/user-attachments/assets/a473c44b-1fe1-4399-911a-d921225f53a6" alt="MSYS2 Logo" width="32" style="vertical-align: middle;" />
 
 
 Baixe o **MSYS2** através do link:
@@ -49,7 +49,7 @@ Esse passo é necessário para que, de qualquer diretório, o sistema operaciona
 ```
 ---
 
-### 🔹 1.3 Instalar o VS Code <img src="https://github.com/user-attachments/assets/0b0e314b-8910-4311-b862-8f4c2e012d33" alt="Visual Studio Code Logo" width="32" style="vertical-align: middle;" />
+### 3️⃣ Instalar o VS Code <img src="https://github.com/user-attachments/assets/0b0e314b-8910-4311-b862-8f4c2e012d33" alt="Visual Studio Code Logo" width="32" style="vertical-align: middle;" />
 
 Baixe e instale o **VS Code** pelo link:
 🔗 [VS Code Download](https://code.visualstudio.com/)
@@ -126,6 +126,7 @@ Se tudo estiver correto, o projeto será compilado e executado com sucesso! 🚀
 ## 📌 5. Próximos Passos
 
 Agora que seu ambiente está configurado, você pode:
+
 ✅ Copiar o conteúdo do repositório clonado para o **seu repositório**. Caso precise de ajuda para criar e organizar seu próprio repositório de exercícios, consulte os seguintes materiais:
 - [Tutorial de Entregas pelo Github](TutorialEntregasGithub.pdf)
 - [Organizando seu repositório no Github](OrganizandoRepositorioGithub.pdf)
