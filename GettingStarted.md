@@ -75,7 +75,7 @@ git clone https://github.com/fellowsheep/CGCCHIB.git
 Se você nunca usou o git, pode fazê-lo utilizando o 🔗 [Github Desktop](https://desktop.github.com/download/). Para isso, consulte o seguinte material:
 - [Tutorial de Entregas pelo Github](TutorialEntregasGithub.pdf)
 
-3️⃣ **Abra o VS Code** e vá em **Arquivo -> "Abrir Diretório"** (File -> "Open Folder"). Selecione o diretório onde você clonou o repositório de exemplo.
+2️⃣ **Abra o VS Code** e vá em **Arquivo -> "Abrir Diretório"** (File -> "Open Folder"). Selecione o diretório onde você clonou o repositório de exemplo.
 
 <img src="https://github.com/user-attachments/assets/501ad8f1-30cc-44b0-bec0-8ef650a79998" alt="" style="width:30%; height:auto;" align="middle"/>
 
