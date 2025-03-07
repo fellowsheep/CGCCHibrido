@@ -105,7 +105,7 @@ Se você nunca usou o git, pode fazê-lo utilizando o 🔗 [Github Desktop](http
 
 <img src="https://github.com/user-attachments/assets/93417f3a-6fc3-448c-bb73-1cc3a33ab199" alt="" style="width:40%; height:auto;" align="middle"/>
 
-2️⃣ Logo após, pressione novamente `Ctrl + Shift + P` e procure por `**CMake: Select a Kit**`.  
+2️⃣ Logo após, pressione novamente `Ctrl + Shift + P` e procure por `CMake: Select a Kit`.  
 
 3️⃣ **Selecione o compilador correto**:
    - Escolha `GCC for MSYS2 UCRT64` (ou similar, conforme sua instalação)
