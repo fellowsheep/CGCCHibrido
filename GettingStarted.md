@@ -1,6 +1,6 @@
-# 🚀 Configuração do Ambiente para Computação Gráfica com OpenGL
+# Configuração do Ambiente para Computação Gráfica com <img src="https://github.com/user-attachments/assets/db96047c-5e1a-4656-a3af-ee3432f9f35a" alt="OpenGL Logo" height="32" style="vertical-align: middle;" />
 
-Este tutorial irá guiá-lo pela instalação e configuração do ambiente para rodar projetos OpenGL com **CMake** e **VS Code**, utilizando o **MinGW-UCRT64** como compilador.
+Este tutorial irá guiá-lo pela instalação e configuração do ambiente para rodar projetos OpenGL com **CMake** e **VS Code**, utilizando o **MinGW-UCRT64** como compilador (portanto, no Windows).
 
 ---
 
@@ -8,7 +8,8 @@ Este tutorial irá guiá-lo pela instalação e configuração do ambiente para 
 
 Antes de começar, certifique-se de ter os seguintes programas instalados:
 
-### 🔹 **1 - Instalar o CMake**
+### 🔹 1.1 Instalar o <img src="https://github.com/user-attachments/assets/5e9c8078-53b0-4497-bbf2-1f379293aa60" alt="CMake Logo" height="32" style="vertical-align: middle;" />
+
 Baixe e instale o **CMake** a partir do site oficial:
 🔗 [CMake Download](https://cmake.org/download/)
 
@@ -16,11 +17,16 @@ Durante a instalação, **habilite a opção "Add CMake to system PATH"** para f
 
 ---
 
-### 🔹 **2 - Instalar o MSYS2 (Compilador MinGW-UCRT64)**
+### 🔹 1.2 Instalar o Compilador Compilador MinGW-UCRT64 através do <img src="https://github.com/user-attachments/assets/a473c44b-1fe1-4399-911a-d921225f53a6" alt="MSYS2 Logo" width="32" style="vertical-align: middle;" />
+
+
 Baixe o **MSYS2** através do link:
 🔗 [MSYS2 Download](https://www.msys2.org/)
 
 Provavelmente ao terminar de instalar, abrirá um terminal. Caso isso não aconteça, digite "msys" na barra de pesquisa do Windows e entre neste aplicativo:
+
+![image](https://github.com/user-attachments/assets/8d5603b3-6338-4235-9775-6aeaa900da7d)
+
 
 Execute o seguinte comando para instalar os pacotes necessários:
 
@@ -28,7 +34,7 @@ Execute o seguinte comando para instalar os pacotes necessários:
 pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain
 ```
 
-#### Configurando a variável de ambiente no Sistema Operacional (Windows)
+### Configurando a variável de ambiente no Sistema Operacional (Windows)
 
 Esse passo é necessário para que, de qualquer diretório, o sistema operacional encontre o executável do compilador. A forma mais simples de fazer isso (se você tiver permissão de administrador do sistema) é a seguinte:
  - Edite a variável de caminhos do sistema operacional (`PATH`), acrescentando o caminho onde ficaram os executáveis do compilador (provavelmente ficaram em `C:\msys64\ucrt64\bin` - ou onde você escolheu instalar)
@@ -43,7 +49,8 @@ Esse passo é necessário para que, de qualquer diretório, o sistema operaciona
 ```
 ---
 
-### 🔹 **3 - Instalar o VS Code**
+### 🔹 1.3 Instalar o VS Code <img src="https://github.com/user-attachments/assets/0b0e314b-8910-4311-b862-8f4c2e012d33" alt="Visual Studio Code Logo" width="32" style="vertical-align: middle;" />
+
 Baixe e instale o **VS Code** pelo link:
 🔗 [VS Code Download](https://code.visualstudio.com/)
 
@@ -52,7 +59,7 @@ Após a instalação, abra o **VS Code** e instale as seguintes extensões:
 - **CMake Tools** ➝ Para integração com o CMake.
 - **C/C++** ➝ Para suporte à IntelliSense e depuração.
   
-Para isso, você pode ir no menu View -> Extensions ou clicar no ícone <img src="https://github.com/user-attachments/assets/ce6873db-1dbb-4a74-887f-4ea90f90dfc4" alt="" width="32" align="middle" /> da interface do Visual Studio Code.
+Para isso, você pode ir no menu View -> Extensions ou clicar no ícone <img src="https://github.com/user-attachments/assets/ce6873db-1dbb-4a74-887f-4ea90f90dfc4" alt="" width="32" style="vertical-align: middle;" /> da interface do Visual Studio Code.
 
 ---
 
@@ -122,5 +129,4 @@ Agora que seu ambiente está configurado, você pode:
 ✅ Adicionar novas funcionalidades ao código.
 ✅ Explorar OpenGL e computação gráfica com mais liberdade! 😃
 
-Se precisar de ajuda, basta perguntar! 🚀
 
