@@ -29,7 +29,7 @@ Durante a instalação, **habilite a opção "Add CMake to system PATH"** para f
 
 ---
 
-### 2️⃣ Instalar o Compilador Compilador MinGW-UCRT64 através do <img src="https://github.com/user-attachments/assets/a473c44b-1fe1-4399-911a-d921225f53a6" alt="MSYS2 Logo" width="32" style="vertical-align: middle;" />
+### 2️⃣ Instalar o Compilador MinGW-UCRT64 através do <img src="https://github.com/user-attachments/assets/a473c44b-1fe1-4399-911a-d921225f53a6" alt="MSYS2 Logo" width="32" style="vertical-align: middle;" />
 
 
 Baixe o **MSYS2** através do link:
