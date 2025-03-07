@@ -1,9 +1,9 @@
-/* Hello Triangle - código adaptado de https://learnopengl.com/#!Getting-started/Hello-Triangle 
+/* Hello Triangle - código adaptado de https://learnopengl.com/#!Getting-started/Hello-Triangle
  *
  * Adaptado por Rossana Baptista Queiroz
- * para a disciplina de Processamento Gráfico - Unisinos
+ * para as disciplinas de Processamento Gráfico/Computação Gráfica - Unisinos
  * Versão inicial: 7/4/2017
- * Última atualização em 13/08/2024
+ * Última atualização em 12/08/2024
  *
  */
 
@@ -19,6 +19,11 @@ using namespace std;
 // GLFW
 #include <GLFW/glfw3.h>
 
+//GLM
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 
 // Protótipo da função de callback de teclado
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -28,25 +33,31 @@ int setupShader();
 int setupGeometry();
 
 // Dimensões da janela (pode ser alterado em tempo de execução)
-const GLuint WIDTH = 800, HEIGHT = 600;
+const GLuint WIDTH = 1000, HEIGHT = 1000;
 
 // Código fonte do Vertex Shader (em GLSL): ainda hardcoded
-const GLchar* vertexShaderSource = "#version 400\n"
+const GLchar* vertexShaderSource = "#version 450\n"
 "layout (location = 0) in vec3 position;\n"
+"layout (location = 1) in vec3 color;\n"
+"uniform mat4 model;\n"
+"out vec4 finalColor;\n"
 "void main()\n"
 "{\n"
 //...pode ter mais linhas de código aqui!
-"gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
+"gl_Position = model * vec4(position, 1.0);\n"
+"finalColor = vec4(color, 1.0);\n"
 "}\0";
 
 //Códifo fonte do Fragment Shader (em GLSL): ainda hardcoded
-const GLchar* fragmentShaderSource = "#version 400\n"
-"uniform vec4 inputColor;\n"
+const GLchar* fragmentShaderSource = "#version 450\n"
+"in vec4 finalColor;\n"
 "out vec4 color;\n"
 "void main()\n"
 "{\n"
-"color = inputColor;\n"
+"color = finalColor;\n"
 "}\n\0";
+
+bool rotateX=false, rotateY=false, rotateZ=false;
 
 // Função MAIN
 int main()
@@ -58,9 +69,9 @@ int main()
 	//Você deve adaptar para a versão do OpenGL suportada por sua placa
 	//Sugestão: comente essas linhas de código para desobrir a versão e
 	//depois atualize (por exemplo: 4.5 com 4 e 5)
-	/*glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);*/
+	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	//Essencial para computadores da Apple
 //#ifdef __APPLE__
@@ -68,7 +79,7 @@ int main()
 //#endif
 
 	// Criação da janela GLFW
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Ola Triangulo! -- Rossana", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Ola 3D -- Rossana!", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 
 	// Fazendo o registro da função de callback para a janela GLFW
@@ -98,15 +109,18 @@ int main()
 
 	// Gerando um buffer simples, com a geometria de um triângulo
 	GLuint VAO = setupGeometry();
-	
 
-	// Enviando a cor desejada (vec4) para o fragment shader
-	// Utilizamos a variáveis do tipo uniform em GLSL para armazenar esse tipo de info
-	// que não está nos buffers
-	GLint colorLoc = glGetUniformLocation(shaderID, "inputColor");
-	
+
 	glUseProgram(shaderID);
-	
+
+	glm::mat4 model = glm::mat4(1); //matriz identidade;
+	GLint modelLoc = glGetUniformLocation(shaderID, "model");
+	//
+	model = glm::rotate(model, /*(GLfloat)glfwGetTime()*/glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glEnable(GL_DEPTH_TEST);
+
 
 	// Loop da aplicação - "game loop"
 	while (!glfwWindowShouldClose(window))
@@ -115,21 +129,43 @@ int main()
 		glfwPollEvents();
 
 		// Limpa o buffer de cor
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f); //cor de fundo
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f); //cor de fundo
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glLineWidth(10);
 		glPointSize(20);
 
-		glBindVertexArray(VAO); //Conectando ao buffer de geometria
+		float angle = (GLfloat)glfwGetTime();
 
-		glUniform4f(colorLoc, 0.0f, 0.0f, 1.0f, 1.0f); //enviando cor para variável uniform inputColor
+		model = glm::mat4(1); 
+		if (rotateX)
+		{
+			model = glm::rotate(model, angle, glm::vec3(1.0f, 0.0f, 0.0f));
+			
+		}
+		else if (rotateY)
+		{
+			model = glm::rotate(model, angle, glm::vec3(0.0f, 1.0f, 0.0f));
 
+		}
+		else if (rotateZ)
+		{
+			model = glm::rotate(model, angle, glm::vec3(0.0f, 0.0f, 1.0f));
+
+		}
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		// Chamada de desenho - drawcall
 		// Poligono Preenchido - GL_TRIANGLES
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 18);
 
-		glBindVertexArray(0); //Desconectando o buffer de geometria
+		// Chamada de desenho - drawcall
+		// CONTORNO - GL_LINE_LOOP
+		
+		glDrawArrays(GL_POINTS, 0, 18);
+		glBindVertexArray(0);
 
 		// Troca os buffers da tela
 		glfwSwapBuffers(window);
@@ -148,6 +184,30 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
+
+	if (key == GLFW_KEY_X && action == GLFW_PRESS)
+	{
+		rotateX = true;
+		rotateY = false;
+		rotateZ = false;
+	}
+
+	if (key == GLFW_KEY_Y && action == GLFW_PRESS)
+	{
+		rotateX = false;
+		rotateY = true;
+		rotateZ = false;
+	}
+
+	if (key == GLFW_KEY_Z && action == GLFW_PRESS)
+	{
+		rotateX = false;
+		rotateY = false;
+		rotateZ = true;
+	}
+
+
+
 }
 
 //Esta função está basntante hardcoded - objetivo é compilar e "buildar" um programa de
@@ -210,28 +270,55 @@ int setupGeometry()
 	// Cada atributo do vértice (coordenada, cores, coordenadas de textura, normal, etc)
 	// Pode ser arazenado em um VBO único ou em VBOs separados
 	GLfloat vertices[] = {
-		//x   y     z
-		//T0
-		-0.5, -0.5, 0.0, //v0
-		 0.5, -0.5, 0.0, //v1
- 		 0.0,  0.5, 0.0, //v2
-		//T1
-			  
+
+		//Base da pirâmide: 2 triângulos
+		//x    y    z    r    g    b
+		-0.5, -0.5, -0.5, 1.0, 1.0, 0.0,
+		-0.5, -0.5,  0.5, 0.0, 1.0, 1.0,
+		 0.5, -0.5, -0.5, 1.0, 0.0, 1.0,
+
+		 -0.5, -0.5, 0.5, 1.0, 1.0, 0.0,
+		  0.5, -0.5,  0.5, 0.0, 1.0, 1.0,
+		  0.5, -0.5, -0.5, 1.0, 0.0, 1.0,
+
+		 //
+		 -0.5, -0.5, -0.5, 1.0, 1.0, 0.0,
+		  0.0,  0.5,  0.0, 1.0, 1.0, 0.0,
+		  0.5, -0.5, -0.5, 1.0, 1.0, 0.0,
+
+		  -0.5, -0.5, -0.5, 1.0, 0.0, 1.0,
+		  0.0,  0.5,  0.0, 1.0, 0.0, 1.0,
+		  -0.5, -0.5, 0.5, 1.0, 0.0, 1.0,
+
+		   -0.5, -0.5, 0.5, 1.0, 1.0, 0.0,
+		  0.0,  0.5,  0.0, 1.0, 1.0, 0.0,
+		  0.5, -0.5, 0.5, 1.0, 1.0, 0.0,
+
+		   0.5, -0.5, 0.5, 0.0, 1.0, 1.0,
+		  0.0,  0.5,  0.0, 0.0, 1.0, 1.0,
+		  0.5, -0.5, -0.5, 0.0, 1.0, 1.0,
+
+
 	};
 
 	GLuint VBO, VAO;
+
 	//Geração do identificador do VBO
 	glGenBuffers(1, &VBO);
+
 	//Faz a conexão (vincula) do buffer como um buffer de array
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
 	//Envia os dados do array de floats para o buffer da OpenGl
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	//Geração do identificador do VAO (Vertex Array Object)
 	glGenVertexArrays(1, &VAO);
+
 	// Vincula (bind) o VAO primeiro, e em seguida  conecta e seta o(s) buffer(s) de vértices
 	// e os ponteiros para os atributos 
 	glBindVertexArray(VAO);
+	
 	//Para cada atributo do vertice, criamos um "AttribPointer" (ponteiro para o atributo), indicando: 
 	// Localização no shader * (a localização dos atributos devem ser correspondentes no layout especificado no vertex shader)
 	// Numero de valores que o atributo tem (por ex, 3 coordenadas xyz) 
@@ -239,15 +326,22 @@ int setupGeometry()
 	// Se está normalizado (entre zero e um)
 	// Tamanho em bytes 
 	// Deslocamento a partir do byte zero 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+	
+	//Atributo posição (x, y, z)
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
+
+	//Atributo cor (r, g, b)
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3*sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
 
 	// Observe que isso é permitido, a chamada para glVertexAttribPointer registrou o VBO como o objeto de buffer de vértice 
 	// atualmente vinculado - para que depois possamos desvincular com segurança
-	glBindBuffer(GL_ARRAY_BUFFER, 0); 
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// Desvincula o VAO (é uma boa prática desvincular qualquer buffer ou array para evitar bugs medonhos)
-	glBindVertexArray(0); 
+	glBindVertexArray(0);
 
 	return VAO;
 }

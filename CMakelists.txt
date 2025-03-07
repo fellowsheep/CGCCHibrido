@@ -22,12 +22,14 @@ FetchContent_MakeAvailable(glfw)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/include/glad)
 include_directories(${CMAKE_SOURCE_DIR}/Common)
-include_directories(${CMAKE_SOURCE_DIR}/Dependencies/glm)  # GLM adicionada!
+include_directories(${CMAKE_SOURCE_DIR}/Dependencies)  # GLM adicionada!
 
 # Lista de exercícios (por enquanto só tem o HelloTriangle)
-set(EXERCISES 
-    HelloTriangle
+set(EXERCISES
+    Hello3D
 )
+
+add_compile_options(-Wno-pragmas)
 
 # Loop para criar um executável para cada exercício
 foreach(EXERCISE ${EXERCISES})
