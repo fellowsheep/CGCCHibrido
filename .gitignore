@@ -7,7 +7,7 @@
 
 # Ignorar arquivos de saída do compilador (objetos e executáveis)
 *.o
-*.obj
+#*.obj
 *.exe
 *.out
 *.a
