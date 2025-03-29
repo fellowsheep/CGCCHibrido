@@ -44,6 +44,12 @@ using namespace std;
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+struct Mesh 
+{
+    GLuint VAO; 
+
+};
+
 int loadSimpleOBJ(string filePATH, int &nVertices)
  {
     std::vector<glm::vec3> vertices;
@@ -116,8 +122,10 @@ int loadSimpleOBJ(string filePATH, int &nVertices)
     
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
+    
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(0);
+
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
     glEnableVertexAttribArray(1);
     
