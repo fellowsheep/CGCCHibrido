@@ -75,8 +75,11 @@ const GLchar *fragmentShaderSource = R"(
 in vec2 texCoord;
 uniform sampler2D texBuff;
 uniform vec3 lightPos;
+uniform vec3 camPos;
 uniform float ka;
 uniform float kd;
+uniform float ks;
+uniform float q;
 out vec4 color;
 in vec4 fragPos;
 in vec3 vNormal;
@@ -91,13 +94,20 @@ void main()
 	//Coeficiente de luz ambiente
 	vec3 ambient = ka * lightColor;
 
-	//Coeficiente difuso
+	//Coeficiente de reflexão difusa
 	vec3 N = normalize(vNormal);
 	vec3 L = normalize(lightPos - vec3(fragPos));
 	float diff = max(dot(N, L),0.0);
 	vec3 diffuse = kd * diff * lightColor;
 
-	vec3 result = (ambient + diffuse) * vec3(objectColor);
+	//Coeficiente de reflexão especular
+	vec3 R = normalize(reflect(-L,N));
+	vec3 V = normalize(camPos - vec3(fragPos));
+	float spec = max(dot(R,V),0.0);
+	spec = pow(spec,q);
+	vec3 specular = ks * spec * lightColor; 
+
+	vec3 result = (ambient + diffuse) * vec3(objectColor) + specular;
 	color = vec4(result,1.0);
 
 })";
@@ -156,8 +166,9 @@ int main()
 	int imgWidth, imgHeight;
 	GLuint texID = loadTexture("../assets/tex/pixelWall.png",imgWidth,imgHeight);
 
-	float ka = 0.1, kd =0.5;
+	float ka = 0.1, kd =0.5, ks = 0.5, q = 10.0;
 	vec3 lightPos = vec3(0.6, 1.2, -0.5);
+	vec3 camPos = vec3(0.0,0.0,-3.0);
 
 
 	glUseProgram(shaderID);
@@ -167,7 +178,10 @@ int main()
 
 	glUniform1f(glGetUniformLocation(shaderID, "ka"), ka);
 	glUniform1f(glGetUniformLocation(shaderID, "kd"), kd);
+	glUniform1f(glGetUniformLocation(shaderID, "ks"), ks);
+	glUniform1f(glGetUniformLocation(shaderID, "q"), q);
 	glUniform3f(glGetUniformLocation(shaderID, "lightPos"), lightPos.x,lightPos.y,lightPos.z);
+	glUniform3f(glGetUniformLocation(shaderID, "camPos"), camPos.x,camPos.y,camPos.z);
 
 	//Ativando o primeiro buffer de textura da OpenGL
 	glActiveTexture(GL_TEXTURE0);
